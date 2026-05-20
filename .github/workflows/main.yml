@@ -1,10 +1,7 @@
 name: Metrics
 on:
-  # 每天固定在 0 点和 12 点（UTC时间）自动更新图表
   schedule: [{cron: "0 0,12 * * *"}]
-  # 支持手动点击按钮立即触发更新
   workflow_dispatch:
-  # 当你往主分支推送代码时也触发更新
   push: {branches: ["master", "main"]}
 jobs:
   github-metrics:
@@ -15,11 +12,14 @@ jobs:
       - name: General GitHub Metrics
         uses: lowlighter/metrics@latest
         with:
-          # 这里的名字必须和你在 Secrets 里填的完全一致
           token: ${{ secrets.METRICS_TOKEN }}
 
           # 基础配置
           user: wuyongpeng
           template: classic
           base: header, activity, community, repositories, metadata
-          config_timezone: Asia/Shanghai # 设置为你的时区
+          config_timezone: Asia/Shanghai
+
+          # 🔥 开启炫酷的 3D 立体视图插件
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year # 显示全年的立体贡献图
